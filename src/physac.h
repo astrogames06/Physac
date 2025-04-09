@@ -5,7 +5,7 @@
 *   DESCRIPTION:
 *
 *   Physac is a small 2D physics library written in pure C. The engine uses a fixed time-step thread loop
-*   to simluate physics. A physics step contains the following phases: get collision information,
+*   to simulate physics. A physics step contains the following phases: get collision information,
 *   apply dynamics, collision solving and position correction. It uses a very simple struct for physic
 *   bodies with a position vector to be used in any 3D rendering API.
 *
@@ -218,8 +218,8 @@ PHYSACDEF int GetPhysicsShapeType(int index);                                   
 PHYSACDEF int GetPhysicsShapeVerticesCount(int index);                                                      // Returns the amount of vertices of a physics body shape
 PHYSACDEF Vector2 GetPhysicsShapeVertex(PhysicsBody body, int vertex);                                      // Returns transformed position of a body shape (body position + vertex transformed position)
 PHYSACDEF void SetPhysicsBodyRotation(PhysicsBody body, float radians);                                     // Sets physics body shape transform based on radians parameter
-PHYSACDEF void DestroyPhysicsBody(PhysicsBody body);                                                        // Unitializes and destroy a physics body
-PHYSACDEF void ClosePhysics(void);                                                                          // Unitializes physics pointers and closes physics loop thread
+PHYSACDEF void DestroyPhysicsBody(PhysicsBody body);                                                        // Uninitializes and destroy a physics body
+PHYSACDEF void ClosePhysics(void);                                                                          // Uninitializes physics pointers and closes physics loop thread
 
 #if defined(__cplusplus)
 }
@@ -308,7 +308,7 @@ static void *PhysicsLoop(void *arg);                                            
 static void PhysicsStep(void);                                                                              // Physics steps calculations (dynamics, collisions and position corrections)
 static int FindAvailableManifoldIndex();                                                                    // Finds a valid index for a new manifold initialization
 static PhysicsManifold CreatePhysicsManifold(PhysicsBody a, PhysicsBody b);                                 // Creates a new physics manifold to solve collision
-static void DestroyPhysicsManifold(PhysicsManifold manifold);                                               // Unitializes and destroys a physics manifold
+static void DestroyPhysicsManifold(PhysicsManifold manifold);                                               // Uninitializes and destroys a physics manifold
 static void SolvePhysicsManifold(PhysicsManifold manifold);                                                 // Solves a created physics manifold between two physics bodies
 static void SolveCircleToCircle(PhysicsManifold manifold);                                                  // Solves collision between two circle shape physics bodies
 static void SolveCircleToPolygon(PhysicsManifold manifold);                                                 // Solves collision between a circle to a polygon shape physics bodies
@@ -884,7 +884,7 @@ PHYSACDEF void SetPhysicsBodyRotation(PhysicsBody body, float radians)
     }
 }
 
-// Unitializes and destroys a physics body
+// Uninitializes and destroys a physics body
 PHYSACDEF void DestroyPhysicsBody(PhysicsBody body)
 {
     if (body != NULL)
@@ -934,7 +934,7 @@ PHYSACDEF void DestroyPhysicsBody(PhysicsBody body)
     #endif
 }
 
-// Unitializes physics pointers and exits physics loop thread
+// Uninitializes physics pointers and exits physics loop thread
 PHYSACDEF void ClosePhysics(void)
 {
     // Exit physics loop thread
@@ -1265,7 +1265,7 @@ static PhysicsManifold CreatePhysicsManifold(PhysicsBody a, PhysicsBody b)
     return newManifold;
 }
 
-// Unitializes and destroys a physics manifold
+// Uninitializes and destroys a physics manifold
 static void DestroyPhysicsManifold(PhysicsManifold manifold)
 {
     if (manifold != NULL)
@@ -1648,7 +1648,7 @@ static void InitializePhysicsManifolds(PhysicsManifold manifold)
 
     for (int i = 0; i < manifold->contactsCount; i++)
     {
-        // Caculate radius from center of mass to contact
+        // Calculate radius from center of mass to contact
         Vector2 radiusA = Vector2Subtract(manifold->contacts[i], bodyA->position);
         Vector2 radiusB = Vector2Subtract(manifold->contacts[i], bodyB->position);
 
